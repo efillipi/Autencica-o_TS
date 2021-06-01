@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+.vs/
+/node_modules/
+/coverage/
+/dist
+/build/
+.env
+.ormconfig.json
+tmp/uploads/*
+!tmp/uploads/.gitkeep
+private-key.pem
+public-key.pem
+
