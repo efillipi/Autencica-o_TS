@@ -2,8 +2,8 @@
   "openapi": "3.0.1",
   "info": {
     "version": "1.0.0",
-    "title": "Tools Remember",
-    "description": "Save tools for remember API",
+    "title": "Documentação da API",
+    "description": "Documentação da API",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "email": "e.fillipi@gmail.com"
