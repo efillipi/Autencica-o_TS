@@ -3,7 +3,7 @@ import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
-  id: number;
+  id_role: number;
 }
 
 @injectable()
@@ -13,14 +13,14 @@ class DeleteRoleService {
     private rolerRepository: IRolerRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<void> {
-    const role = await this.rolerRepository.findById(id);
+  public async execute({ id_role }: IRequest): Promise<void> {
+    const role = await this.rolerRepository.findById(id_role);
 
     if (!role) {
       throw new AppError('Role informada invalida', 404);
     }
 
-    await this.rolerRepository.delete(id);
+    await this.rolerRepository.delete(id_role);
   }
 }
 

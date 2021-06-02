@@ -4,7 +4,7 @@ import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
-  id: number;
+  id_role: number;
 }
 
 @injectable()
@@ -14,8 +14,8 @@ class FindRoleService {
     private rolerRepository: IRolerRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<Roler> {
-    const role = await this.rolerRepository.findById(id);
+  public async execute({ id_role }: IRequest): Promise<Roler> {
+    const role = await this.rolerRepository.findById(id_role);
 
     if (!role) {
       throw new AppError('Role informada invalida', 404);

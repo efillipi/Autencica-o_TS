@@ -17,7 +17,7 @@ class UpdateRoleController {
     const id_role = Number(id);
 
     const schema = yup.object().shape({
-      id_role: yup.number().required('id da Role é obrigatório'),
+      id_role: yup.number().min(1).required('id da Role é obrigatório'),
       name: yup.string(),
       description: yup.string(),
     });
@@ -31,7 +31,7 @@ class UpdateRoleController {
     const updateRolesService = container.resolve(UpdateRolerService);
 
     const role = await updateRolesService.execute({
-      id: id_role,
+      id_role,
       name,
       description,
     });

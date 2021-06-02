@@ -15,7 +15,7 @@ class FindRoleController {
     const id_role = Number(id);
 
     const schema = yup.object().shape({
-      id_role: yup.number().required('id da Role é obrigatório'),
+      id_role: yup.number().min(1).required('id da Role é obrigatório'),
     });
 
     await schema.validate({ id_role }, { abortEarly: false }).catch(err => {
@@ -24,7 +24,7 @@ class FindRoleController {
 
     const findRoleService = container.resolve(FindRoleService);
 
-    const role = await findRoleService.execute({ id: id_role });
+    const role = await findRoleService.execute({ id_role });
 
     return response.status(200).json(classToClass(role));
   }

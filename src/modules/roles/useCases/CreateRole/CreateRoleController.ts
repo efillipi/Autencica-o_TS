@@ -13,8 +13,8 @@ class CreateRoleController {
     const { name, description } = request.body;
 
     const schema = yup.object().shape({
-      name: yup.string().required('Nome é obrigatório'),
-      description: yup.string().required('Descrisão é obrigatório'),
+      name: yup.string().min(1).required('name é obrigatório'),
+      description: yup.string().min(1).required('description é obrigatório'),
     });
 
     await schema.validate(request.body, { abortEarly: false }).catch(err => {
