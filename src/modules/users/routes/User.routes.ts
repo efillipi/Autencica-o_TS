@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import uploadConfig from '@config/upload';
 import ensureAuth from '@shared/middlewares/ensureAuth';
 
 import CreateUserController from '@modules/users/useCases/CreateUser/CreateUserController';
@@ -8,10 +10,11 @@ import UpdateUserController from '@modules/users/useCases/UpdateUser/UpdateUserC
 import ShowUsersController from '@modules/users/useCases/ShowUsers/ShowUsersController';
 
 import ValidateEmailController from '@modules/users/useCases/ValidateEmail/ValidateEmailController';
-import FindByUserTokenController from '@modules/users/useCases/FindByUserToken/FindByUserTokenController';
-import RefreshTokenController from '@modules/users/useCases/RefreshToken/RefreshTokenController';
+
+import UpdateUserAvatarController from '@modules/users/useCases/UpdateAvatar/UpdateUserAvatarController';
 
 const UserRouter = Router();
+const upload = multer(uploadConfig);
 
 const createUserController = new CreateUserController();
 const deleteUserController = new DeleteUserController();
@@ -20,8 +23,8 @@ const updateUserController = new UpdateUserController();
 const showUsersController = new ShowUsersController();
 
 const validateEmailController = new ValidateEmailController();
-const findByUserTokenController = new FindByUserTokenController();
-const refreshTokenController = new RefreshTokenController();
+
+const updateUserAvatarController = new UpdateUserAvatarController();
 
 UserRouter.post('/', ensureAuth(['ADM', 'USER']), createUserController.execute);
 
@@ -30,9 +33,6 @@ UserRouter.post('/validate-email', validateEmailController.execute);
 UserRouter.get('/', ensureAuth(['ADM', 'USER']), showUsersController.execute);
 
 UserRouter.get('/:id', ensureAuth(['ADM', 'USER']), findUserController.execute);
-
-UserRouter.get('/validate-token/:token', findByUserTokenController.execute);
-UserRouter.post('/refresh-token', refreshTokenController.execute);
 
 UserRouter.put(
   '/:id',
@@ -44,6 +44,13 @@ UserRouter.delete(
   '/:id',
   ensureAuth(['ADM', 'USER']),
   deleteUserController.execute,
+);
+
+UserRouter.patch(
+  '/avatar',
+  ensureAuth(['ADM', 'USER']),
+  upload.single('avatar'),
+  updateUserAvatarController.execute,
 );
 
 export default UserRouter;
