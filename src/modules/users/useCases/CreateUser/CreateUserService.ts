@@ -2,7 +2,7 @@ import User from '@modules/users/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@shared/Container/providers/HashProvider/models/IHashProvider';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import IEmailConfirmationProvider from '@modules/users/providers/EmailConfirmationProvider/models/IEmailConfirmationProvider';
 import { injectable, inject } from 'tsyringe';
 
@@ -23,8 +23,8 @@ class CreateUser {
     @inject('HashProvider')
     private hashProvider: IHashProvider,
 
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
 
     @inject('EmailConfirmation')
     private emailConfirmation: IEmailConfirmationProvider,
@@ -41,7 +41,7 @@ class CreateUser {
     if (emailAlreadyExists) {
       throw new AppError('Este Email ja esta sendo utilizado', 409);
     }
-    const existsRoles = await this.rolerRepository.findByNames(roles);
+    const existsRoles = await this.roleRepository.findByNames(roles);
 
     if (existsRoles.length === 0) {
       throw new AppError('Role ou Roles incorretas', 400);

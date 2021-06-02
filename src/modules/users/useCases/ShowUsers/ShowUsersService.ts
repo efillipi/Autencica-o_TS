@@ -1,6 +1,6 @@
 import User from '@modules/users/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
@@ -14,8 +14,8 @@ class ShowUsersService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
   public async execute({ role }: IRequest): Promise<User[]> {
@@ -25,7 +25,7 @@ class ShowUsersService {
       return users;
     }
 
-    const roleExist = await this.rolerRepository.findByName(role);
+    const roleExist = await this.roleRepository.findByName(role);
 
     if (!roleExist) {
       throw new AppError('Role informada invalida');

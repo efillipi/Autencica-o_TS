@@ -1,6 +1,6 @@
-import Roler from '@modules/roles/typeorm/entities/Role';
+import Role from '@modules/roles/typeorm/entities/Role';
 import AppError from '@shared/errors/AppError';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
@@ -12,22 +12,22 @@ interface IRequest {
 @injectable()
 class UpdateRoleService {
   constructor(
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
   public async execute({
     id_role,
     name,
     description,
-  }: IRequest): Promise<Roler> {
-    const role = await this.rolerRepository.findById(id_role);
+  }: IRequest): Promise<Role> {
+    const role = await this.roleRepository.findById(id_role);
 
     if (!role) {
       throw new AppError('Role informada invalida', 404);
     }
 
-    const existRole = await this.rolerRepository.findByName(name);
+    const existRole = await this.roleRepository.findByName(name);
 
     if (existRole && existRole.id !== role.id) {
       throw new AppError('Role ja cadastrada!', 409);
@@ -36,7 +36,7 @@ class UpdateRoleService {
     role.name = name;
     role.description = description;
 
-    await this.rolerRepository.save(role);
+    await this.roleRepository.save(role);
 
     return role;
   }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import * as yup from 'yup';
-import DeleteRolerService from '@modules/roles/useCases/DeleteRole/DeleteRoleService';
+import DeleteRoleService from '@modules/roles/useCases/DeleteRole/DeleteRoleService';
 import AppError from '@shared/errors/AppError';
 
 class DeleteRoleController {
@@ -21,9 +21,9 @@ class DeleteRoleController {
       throw new AppError(err.errors, 422);
     });
 
-    const deleteRolerService = container.resolve(DeleteRolerService);
+    const deleteRoleService = container.resolve(DeleteRoleService);
 
-    await deleteRolerService.execute({ id_role });
+    await deleteRoleService.execute({ id_role });
 
     return response.status(204).json();
   }

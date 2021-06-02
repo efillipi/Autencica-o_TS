@@ -1,5 +1,5 @@
 import AppError from '@shared/errors/AppError';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
@@ -9,18 +9,18 @@ interface IRequest {
 @injectable()
 class DeleteRoleService {
   constructor(
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
   public async execute({ id_role }: IRequest): Promise<void> {
-    const role = await this.rolerRepository.findById(id_role);
+    const role = await this.roleRepository.findById(id_role);
 
     if (!role) {
       throw new AppError('Role informada invalida', 404);
     }
 
-    await this.rolerRepository.delete(id_role);
+    await this.roleRepository.delete(id_role);
   }
 }
 

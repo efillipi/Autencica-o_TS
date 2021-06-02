@@ -1,6 +1,6 @@
-import Roler from '@modules/roles/typeorm/entities/Role';
+import Role from '@modules/roles/typeorm/entities/Role';
 import AppError from '@shared/errors/AppError';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
@@ -11,18 +11,18 @@ interface IRequest {
 @injectable()
 class CreateRoleService {
   constructor(
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
-  public async execute({ name, description }: IRequest): Promise<Roler> {
-    const existRole = await this.rolerRepository.findByName(name);
+  public async execute({ name, description }: IRequest): Promise<Role> {
+    const existRole = await this.roleRepository.findByName(name);
 
     if (existRole) {
       throw new AppError('Role ja cadastrada!', 409);
     }
 
-    const role = await this.rolerRepository.create({
+    const role = await this.roleRepository.create({
       name,
       description,
     });

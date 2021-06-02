@@ -1,19 +1,19 @@
-import Roler from '@modules/roles/typeorm/entities/Role';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
-import ICreateRolerDTO from '@modules/roles/dtos/ICreateRoleDTO';
+import Role from '@modules/roles/typeorm/entities/Role';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
+import ICreateRoleDTO from '@modules/roles/dtos/ICreateRoleDTO';
 import { getRepository, In, Repository } from 'typeorm';
 
-class RolerRepository implements IRolerRepository {
-  private ormRepository: Repository<Roler>;
+class RoleRepository implements IRoleRepository {
+  private ormRepository: Repository<Role>;
 
   constructor() {
-    this.ormRepository = getRepository(Roler);
+    this.ormRepository = getRepository(Role);
   }
 
   public async create({
     name,
     description,
-  }: ICreateRolerDTO): Promise<Roler | undefined> {
+  }: ICreateRoleDTO): Promise<Role | undefined> {
     const role = this.ormRepository.create({
       name,
       description,
@@ -24,13 +24,13 @@ class RolerRepository implements IRolerRepository {
     return role;
   }
 
-  public async save(role: Roler): Promise<Roler> {
+  public async save(role: Role): Promise<Role> {
     this.ormRepository.save(role);
 
     return role;
   }
 
-  public async findById(id: number): Promise<Roler | undefined> {
+  public async findById(id: number): Promise<Role | undefined> {
     const role = await this.ormRepository.findOne(
       { id },
       { relations: ['users'] },
@@ -39,13 +39,13 @@ class RolerRepository implements IRolerRepository {
     return role;
   }
 
-  public async findByIds(ids: number[]): Promise<Roler[] | undefined> {
+  public async findByIds(ids: number[]): Promise<Role[] | undefined> {
     const role = await this.ormRepository.findByIds(ids);
 
     return role;
   }
 
-  public async findByNames(names: string[]): Promise<Roler[] | undefined> {
+  public async findByNames(names: string[]): Promise<Role[] | undefined> {
     const roles = await this.ormRepository.find({
       where: {
         name: In(names),
@@ -55,7 +55,7 @@ class RolerRepository implements IRolerRepository {
     return roles;
   }
 
-  public async findByName(name: string): Promise<Roler | undefined> {
+  public async findByName(name: string): Promise<Role | undefined> {
     const role = await this.ormRepository.findOne({
       where: { name },
     });
@@ -63,7 +63,7 @@ class RolerRepository implements IRolerRepository {
     return role;
   }
 
-  public async find(): Promise<Roler[] | undefined> {
+  public async find(): Promise<Role[] | undefined> {
     const roles = await this.ormRepository.find();
     return roles;
   }
@@ -73,4 +73,4 @@ class RolerRepository implements IRolerRepository {
   }
 }
 
-export default RolerRepository;
+export default RoleRepository;

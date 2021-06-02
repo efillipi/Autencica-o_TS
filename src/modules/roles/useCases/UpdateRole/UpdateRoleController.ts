@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import * as yup from 'yup';
-import UpdateRolerService from '@modules/roles/useCases/UpdateRole/UpdateRoleService';
+import UpdateRoleService from '@modules/roles/useCases/UpdateRole/UpdateRoleService';
 import AppError from '@shared/errors/AppError';
 
 class UpdateRoleController {
@@ -28,7 +28,7 @@ class UpdateRoleController {
         throw new AppError(err.errors, 422);
       });
 
-    const updateRolesService = container.resolve(UpdateRolerService);
+    const updateRolesService = container.resolve(UpdateRoleService);
 
     const role = await updateRolesService.execute({
       id_role,

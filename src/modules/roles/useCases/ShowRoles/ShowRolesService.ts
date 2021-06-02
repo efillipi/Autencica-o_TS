@@ -1,16 +1,16 @@
-import Roler from '@modules/roles/typeorm/entities/Role';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import Role from '@modules/roles/typeorm/entities/Role';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 
 @injectable()
 class ShowRolesService {
   constructor(
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
-  public async execute(): Promise<Roler[]> {
-    const roles = await this.rolerRepository.find();
+  public async execute(): Promise<Role[]> {
+    const roles = await this.roleRepository.find();
 
     return roles;
   }

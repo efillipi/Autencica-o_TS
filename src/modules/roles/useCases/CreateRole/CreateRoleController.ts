@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import * as yup from 'yup';
-import CreateRolerService from '@modules/roles/useCases/CreateRole/CreateRoleService';
+import CreateRoleService from '@modules/roles/useCases/CreateRole/CreateRoleService';
 import AppError from '@shared/errors/AppError';
 
 class CreateRoleController {
@@ -21,9 +21,9 @@ class CreateRoleController {
       throw new AppError(err.errors, 422);
     });
 
-    const createRolerService = container.resolve(CreateRolerService);
+    const createRoleService = container.resolve(CreateRoleService);
 
-    const role = await createRolerService.execute({
+    const role = await createRoleService.execute({
       name,
       description,
     });

@@ -1,6 +1,6 @@
-import Roler from '@modules/roles/typeorm/entities/Role';
+import Role from '@modules/roles/typeorm/entities/Role';
 import AppError from '@shared/errors/AppError';
-import IRolerRepository from '@modules/roles/repositories/IRolerRepository';
+import IRoleRepository from '@modules/roles/repositories/IRoleRepository';
 import { injectable, inject } from 'tsyringe';
 
 interface IRequest {
@@ -10,12 +10,12 @@ interface IRequest {
 @injectable()
 class FindRoleService {
   constructor(
-    @inject('RolerRepository')
-    private rolerRepository: IRolerRepository,
+    @inject('RoleRepository')
+    private roleRepository: IRoleRepository,
   ) {}
 
-  public async execute({ id_role }: IRequest): Promise<Roler> {
-    const role = await this.rolerRepository.findById(id_role);
+  public async execute({ id_role }: IRequest): Promise<Role> {
+    const role = await this.roleRepository.findById(id_role);
 
     if (!role) {
       throw new AppError('Role informada invalida', 404);
